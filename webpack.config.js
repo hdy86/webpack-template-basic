@@ -1,5 +1,5 @@
 // import
-const path = require('path')
+const path = require('path') // path : NodeJS에서 파일 및 디렉토리 경로 작업을 위한 전역 모듈
 const HtmlPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
@@ -10,16 +10,19 @@ module.exports = {
 
   // 결과물(번들)을 반환하는 설정
   output: {
+    // 주석은 기본값!, `__dirname`은 현재 파일의 위치를 알려주는 NodeJS 전역 변수
     // path: path.resolve(__dirname, 'dist'),
     // filename: 'main.js',
     clean: true
   },
 
+  // 모듈 처리 방식을 설정
   module: {
     rules: [
       {
         test: /\.s?css$/,
         use: [
+          // 순서 중요!
           'style-loader',
           'css-loader',
           'postcss-loader',
@@ -28,6 +31,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
+        exclude: /node_modules/, // 제외할 경로
         use: [
           'babel-loader'
         ]
@@ -47,7 +51,10 @@ module.exports = {
     })
   ],
 
+  // 개발 서버 옵션
   devServer: {
-    host: 'localhost'
+    host: 'localhost',
+    port: 8080,
+    hot: true
   }
 }
